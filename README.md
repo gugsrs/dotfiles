@@ -1,2 +1,2 @@
 # utilities
-Short codes, config files e etc. =)
+Random codes, config files & etc. =)
