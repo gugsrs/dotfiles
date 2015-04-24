@@ -46,13 +46,12 @@ NeoBundle 'Shougo/vimproc.vim', {
       \    },
       \ }
 NeoBundle 'Shougo/vimshell.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'terryma/vim-multiple-cursors'
 
 "" Snippets
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
-
-"" Color
-NeoBundle 'tomasr/molokai'
 
 "" Vim-Bootstrap Updater
 NeoBundle 'sherzberg/vim-bootstrap-updater'
@@ -81,6 +80,9 @@ NeoBundle 'mattn/emmet-vim'
 
 "" Colorschemes from Flazz
 NeoBundle 'flazz/vim-colorschemes'
+
+"" GoLang plugin
+NeoBundle 'fatih/vim-go'
 
 call neobundle#end()
 
@@ -150,6 +152,8 @@ set nocursorline
 set guioptions=egmrti
 set gfn=Monospace\ 10
 
+set omnifunc=syntaxcomplete#Complete
+
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
     set guifont=Menlo:h12
@@ -193,10 +197,14 @@ if exists("*fugitive#statusline")
 endif
 
 let g:airline_theme = 'powerlineish'
-let g:airline_enable_branch = 1
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+
+"Multiple cursor flexible exit
+let g:multi_cursor_exit_from_normal_mode=0
+let g:multi_cursor_exit_from_insert_mode=0
 
 "*****************************************************************************
 "" Abbreviations
@@ -294,8 +302,9 @@ set autoread
 "" Mappings
 "*****************************************************************************
 "" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
+"" Change split position Horizontal/Vertical
+nnoremap <Leader>h <C-w>H
+nnoremap <Leader>v <C-w>K
 
 "" Git
 noremap <Leader>ga :!git add .<CR>
@@ -348,7 +357,7 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
 
 " vim-airline
-let g:airline_enable_syntastic = 1
+let g:airline#extensions#synstastic#enabled = 1
 
 "" Remove trailing whitespace on <leader>S
 nnoremap <silent> <leader>S :call TrimWhiteSpace()<cr>:let @/=''<CR>
@@ -410,6 +419,7 @@ let g:jedi#completions_command = "<C-Space>"
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
+noremap <leader>l :lclose<CR>
 
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
@@ -432,23 +442,25 @@ vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
 "dragvisuals map
- runtime plugin/dragvisuals.vim                             
-                                                            
+ runtime plugin/dragvisuals.vim
+
 vmap  <expr>  <LEFT>   DVB_Drag('left')
 vmap  <expr>  <RIGHT>  DVB_Drag('right')
 vmap  <expr>  <DOWN>   DVB_Drag('down')
 vmap  <expr>  <UP>     DVB_Drag('up')
 vmap  <expr>  D        DVB_Duplicate()
-                                                            
-" map ++ to vmath.vim 
+
+" map ++ to vmath.vim
 vmap <expr>  ++  VMATH_YankAndAnalyse()
-nmap         ++  vip++                 
+nmap         ++  vip++
  " Remove any introduced trailing whitespace after moving...
- let g:DVB_TrimWS = 1                                       
+ let g:DVB_TrimWS = 1
+
+
+" unite.vim
+nnoremap <C-l> :Unite file file_rec buffer<CR>
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
-
-"SkR

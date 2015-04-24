@@ -1,3 +1,8 @@
+#bash-completion
+
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+        . `brew --prefix`/etc/bash_completion
+fi
 
 #Set architecture flags
 #export ARCHFLAGS="-arch x86_64"
@@ -13,7 +18,7 @@ export PATH
 
 # Setting PATH for Python 2.7
 # The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+PATH="/usr/local/Cellar/python/2.7.9/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH
 
 # Setting PATH for Python 3.4
@@ -40,4 +45,14 @@ alias la="ls -a"
 alias ll="ls -lah"
 alias ls="ls -G"
 
-alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+#alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias vim="/usr/local/Cellar/macvim/7.4-74/MacVim.app/Contents/MacOS/Vim"
+alias wc-go="Documents/Development/GoWorkspace/bin/wc-go"
+
+#alias git
+alias gs="git status"
+alias gp="git push"
+alias gl="git lg"
+alias gpr="git pull --rebase"
+
+function finder { find ./ -name "$1" -exec grep "$2" {} + ;}
