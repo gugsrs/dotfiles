@@ -37,6 +37,9 @@ PATH=$PATH:$GOPATH/bin
 export GOPATH
 export PATH
 
+#GIT EDITOR
+export GIT_EDITOR="/usr/local/Cellar/macvim/7.4-74/MacVim.app/Contents/MacOS/Vim"
+
 # aliases
 alias grep="grep --color"
 alias egrep="egrep --color"
@@ -54,5 +57,6 @@ alias gs="git status"
 alias gp="git push"
 alias gl="git lg"
 alias gpr="git pull --rebase"
+alias gd="git diff"
 
 function finder { find ./ -name "$1" -exec grep "$2" {} + ;}

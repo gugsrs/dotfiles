@@ -59,8 +59,6 @@ NeoBundle 'sherzberg/vim-bootstrap-updater'
 let g:vim_bootstrap_langs = "c,python,html"
 let g:vim_bootstrap_editor = "vim"				" nvim or vim
 
-"" Custom bundles
-
 "" Python Bundle
 NeoBundle "davidhalter/jedi-vim"
 NeoBundle "scrooloose/syntastic"
@@ -140,6 +138,7 @@ set shell=/bin/sh
 "*****************************************************************************
 syntax on
 set ruler
+set relativenumber
 set number
 
 let no_buffers_menu=1
@@ -157,7 +156,7 @@ set omnifunc=syntaxcomplete#Complete
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
     set guifont=Menlo:h12
-    set transparency=7
+    set transparency=1
   endif
 else
   let g:CSApprox_loaded = 1
