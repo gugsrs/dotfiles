@@ -81,6 +81,10 @@ NeoBundle 'flazz/vim-colorschemes'
 
 "" GoLang plugin
 NeoBundle 'fatih/vim-go'
+NeoBundle 'vim-jp/vim-go-extra'
+
+"" Swift
+NeoBundle 'keith/swift.vim'
 
 call neobundle#end()
 
@@ -300,6 +304,9 @@ set autoread
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
+"" Remapping omni complete
+imap <C-l> <C-X><C-O>
+
 "" Split
 "" Change split position Horizontal/Vertical
 nnoremap <Leader>h <C-w>H
