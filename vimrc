@@ -29,9 +29,14 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "" NeoBundle install packages
 "*****************************************************************************
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'vim-scripts/indentpython.vim'
 NeoBundle 'tpope/vim-commentary'
+
+"" Completion
+NeoBundle 'ervandew/supertab'
+NeoBundle 'Shougo/neocomplete.vim'
+
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'sheerun/vim-polyglot'
@@ -84,8 +89,10 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'vim-jp/vim-go-extra'
 
 "" Swift
-NeoBundle 'keith/swift.vim'
-
+NeoBundle 'kballard/vim-swift', {
+        \ 'filetypes': 'swift',
+        \ 'unite_sources': ['swift/device', 'swift/developer_dir']
+        \}
 call neobundle#end()
 
 " Required:
@@ -108,7 +115,7 @@ set backspace=indent,eol,start
 
 "" Tabs. May be overriten by autocmd rules
 set tabstop=4
-set softtabstop=0
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 
@@ -154,8 +161,6 @@ set t_Co=256
 set nocursorline
 set guioptions=egmrti
 set gfn=Monospace\ 10
-
-set omnifunc=syntaxcomplete#Complete
 
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
@@ -204,6 +209,9 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#synstastic#enabled = 1
 
 "Multiple cursor flexible exit
 let g:multi_cursor_exit_from_normal_mode=0
@@ -264,6 +272,15 @@ if !exists('*TrimWhiteSpace')
   endfunction
 endif
 
+if !exists('*SetupPython')
+  function SetupPython()
+    set autoindent
+    set textwidth=79
+	set fileformat=unix
+	let python_highlight_all=1
+  endfunction
+endif
+
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
@@ -292,6 +309,13 @@ augroup vimrc-make-cmake
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
 
+"" Python
+augroup vimrc-make-cmake
+  autocmd!
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd BufNewFile,BufRead *.py call SetupPython()
+augroup END
+
 if has("gui_running")
   augroup vimrc-white-space
     autocmd!
@@ -304,8 +328,6 @@ set autoread
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-"" Remapping omni complete
-imap <C-l> <C-X><C-O>
 
 "" Split
 "" Change split position Horizontal/Vertical
@@ -336,17 +358,6 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-"" ctrlp.vim
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|tox)$'
-let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-let g:ctrlp_use_caching = 0
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
-let g:ctrlp_map = ',e'
-let g:ctrlp_open_new_file = 'r'
-
 " snippets
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -362,8 +373,15 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
 
-" vim-airline
-let g:airline#extensions#synstastic#enabled = 1
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+if !exists('g:neocomplete#keyword_patterns')
+	    let g:neocomplete#keyword_patterns = {}
+	endif
+	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 "" Remove trailing whitespace on <leader>S
 nnoremap <silent> <leader>S :call TrimWhiteSpace()<cr>:let @/=''<CR>
@@ -419,18 +437,15 @@ let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
+let g:jedi#show_call_signatures = "1"
 let g:jedi#completions_command = "<C-Space>"
+let g:jedi#use_tabs_not_buffers = 1
 
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
 noremap <leader>l :lclose<CR>
 
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
@@ -439,6 +454,9 @@ let g:tagbar_autofocus = 1
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+
+"" omnifunc
+imap <C-l> <C-X><C-O>
 
 "remap V to C-V, now V is Visual-Block
 nnoremap    v   <C-V>
@@ -447,24 +465,9 @@ nnoremap <C-V>     v
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
-"dragvisuals map
- runtime plugin/dragvisuals.vim
-
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
-
-" map ++ to vmath.vim
-vmap <expr>  ++  VMATH_YankAndAnalyse()
-nmap         ++  vip++
- " Remove any introduced trailing whitespace after moving...
- let g:DVB_TrimWS = 1
-
-
 " unite.vim
 nnoremap <C-l> :Unite file file_rec buffer<CR>
+nnoremap <C-p> :Unite file_rec/async<cr>
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
