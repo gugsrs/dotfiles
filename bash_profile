@@ -60,3 +60,7 @@ alias gpr="git pull --rebase"
 alias gd="git diff"
 
 function finder { find ./ -name "$1" -exec grep "$2" {} + ;}
+
+function rmds_store {
+    find ./ -name ".DS_Store" -depth -exec rm {} \;
+}
