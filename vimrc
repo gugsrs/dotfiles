@@ -36,6 +36,8 @@ NeoBundle 'tpope/vim-commentary'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'Shougo/neocomplete.vim'
 
+NeoBundle 'craigemery/vim-autotag'
+
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'airblade/vim-gitgutter'
@@ -370,8 +372,9 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_auto_loc_list=1
+let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_check_on_open = 1
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -442,7 +445,7 @@ let g:jedi#completions_command = "<C-Space>"
 let g:jedi#use_tabs_not_buffers = 1
 
 " syntastic
-let g:syntastic_python_checkers=['python', 'flake8']
+let g:syntastic_python_checkers=['python', 'flake8', 'pylint']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
 noremap <leader>l :lclose<CR>
 
@@ -468,6 +471,9 @@ vnoremap <C-V>     v
 " unite.vim
 nnoremap <C-l> :Unite file file_rec buffer<CR>
 nnoremap <C-p> :Unite file_rec/async<cr>
+
+" save file with sudo
+cmap w!! w !sudo tee > /dev/null %
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
