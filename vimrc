@@ -34,12 +34,12 @@ NeoBundle 'tpope/vim-commentary'
 
 "" Completion
 NeoBundle 'ervandew/supertab'
-NeoBundle 'Shougo/neocomplete.vim'
 
 NeoBundle 'craigemery/vim-autotag'
 
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'vim-scripts/grep.vim'
@@ -77,7 +77,6 @@ NeoBundle 'vim-scripts/c.vim'
 
 
 "" HTML Bundle
-NeoBundle 'amirh/HTML-AutoCloseTag'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'gorodinskiy/vim-coloresque'
 NeoBundle 'tpope/vim-haml'
@@ -156,6 +155,7 @@ set number
 
 let no_buffers_menu=1
 highlight BadWhitespace ctermbg=red guibg=red
+set background=dark
 colorscheme inkpot
 
 set mousemodel=popup
@@ -206,7 +206,7 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
-let g:airline_theme = 'powerlineish'
+let g:airline_theme='badcat'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -277,7 +277,7 @@ endif
 if !exists('*SetupPython')
   function SetupPython()
     set autoindent
-    set textwidth=79
+    set textwidth=119
 	set fileformat=unix
 	let python_highlight_all=1
   endfunction
@@ -314,7 +314,7 @@ augroup END
 "" Python
 augroup vimrc-make-cmake
   autocmd!
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  ""autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd BufNewFile,BufRead *.py call SetupPython()
 augroup END
 
@@ -376,15 +376,6 @@ let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_open = 1
 
-" neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-if !exists('g:neocomplete#keyword_patterns')
-	    let g:neocomplete#keyword_patterns = {}
-	endif
-	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 "" Remove trailing whitespace on <leader>S
 nnoremap <silent> <leader>S :call TrimWhiteSpace()<cr>:let @/=''<CR>
@@ -428,13 +419,14 @@ noremap ,o :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=lin
 " vim-python
 augroup vimrc-python
   autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
       \ formatoptions+=croq softtabstop=4 smartindent
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
 " jedi-vim
 let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
@@ -446,7 +438,7 @@ let g:jedi#use_tabs_not_buffers = 1
 
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8', 'pylint']
-let g:syntastic_python_flake8_post_args='--ignore=W391'
+let g:syntastic_python_flake8_args='--ignore=W391,E501'
 noremap <leader>l :lclose<CR>
 
 " Tagbar
