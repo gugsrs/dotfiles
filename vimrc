@@ -31,7 +31,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'vim-scripts/indentpython.vim'
 NeoBundle 'tpope/vim-commentary'
-
+NeoBundle 'miyakogi/conoline.vim'
 "" Completion
 NeoBundle 'ervandew/supertab'
 
@@ -115,10 +115,10 @@ set fileencodings=utf-8
 set backspace=indent,eol,start
 
 "" Tabs. May be overriten by autocmd rules
+set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
 
 "" Map leader to ,
 let mapleader=','
@@ -155,6 +155,7 @@ set number
 
 let no_buffers_menu=1
 highlight BadWhitespace ctermbg=red guibg=red
+set t_Co=256
 set background=dark
 colorscheme inkpot
 
@@ -325,6 +326,8 @@ if has("gui_running")
   augroup END
 endif
 
+autocmd Filetype html setlocal ts=2 sts=2 sw=2
+
 set autoread
 
 "*****************************************************************************
@@ -464,8 +467,17 @@ vnoremap <C-V>     v
 nnoremap <C-l> :Unite file file_rec buffer<CR>
 nnoremap <C-p> :Unite file_rec/async<cr>
 
+set pastetoggle=<F5>
+
 " save file with sudo
 cmap w!! w !sudo tee > /dev/null %
+
+let g:conoline_auto_enable = 0
+set cursorline
+hi CursorLine cterm=NONE ctermbg=8
+
+iab IPDB import ipdb; ipdb.set_trace()
+iab PDB import pdb; pdb.set_trace()
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))

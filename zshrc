@@ -1,4 +1,8 @@
 [[ "$TERM" == "xterm" ]] && export TERM=xterm-256color
+if [ -z "$TMUX" ]
+then
+	    tmux 
+fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -52,9 +56,11 @@ ZSH_THEME="gugsrs"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git pyenv zsh-autosuggestions)
+plugins=(git pyenv zsh-autosuggestions z)
 
 source $ZSH/oh-my-zsh.sh
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=3"
 
 # User configuration
 
@@ -88,7 +94,7 @@ source $ZSH/oh-my-zsh.sh
 # aliases
 alias grep="grep --color"
 alias egrep="egrep --color"
-alias less="less -Xr --color"
+alias less="less -Xr"
 alias la="ls -a --color"
 alias ll="ls -lah --color"
 alias ls="ls -G --color"
@@ -102,6 +108,7 @@ alias gd="git diff"
 alias gca="git commit --amend"
 
 alias copy="xclip -sel clip"
+alias tmatessh="tmate display -p '#{tmate_ssh}'"
 
 function ve {
 	pyenv activate ${PWD##*/};
@@ -109,9 +116,13 @@ function ve {
 function de {
 	pyenv deactivate;
 }
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/home/gustavo/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
