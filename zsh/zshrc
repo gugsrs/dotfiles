@@ -1,0 +1,77 @@
+[[ "$TERM" == "xterm" ]] && export TERM=xterm-256color
+if [ -z "$TMUX" ]
+then
+	    tmux 
+fi
+if command -v pyenv 1>/dev/null 2>&1;
+then
+	eval "$(pyenv init -)"
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/gustavo/.oh-my-zsh
+
+ZSH_THEME="gugsrs2"
+
+export UPDATE_ZSH_DAYS=5
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git pyenv osx zsh-autosuggestions z better-virtualenv git-prompt)
+
+source $ZSH/oh-my-zsh.sh
+
+unsetopt share_history
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=3"
+
+# ALIASES
+alias grep="grep"
+alias egrep="egrep"
+alias less="less -Xr"
+alias la="ls -a"
+alias ll="ls -lah"
+alias ls="ls -G"
+
+#alias git
+alias gs="git status"
+alias gp="git push"
+alias gl="git lg"
+alias gpr="git pull --rebase"
+alias gd="git diff"
+alias gca="git commit --amend"
+
+alias vim="nvim"
+alias tmatessh="tmate display -p '#{tmate_ssh}'"
+
+# FUNCTIONS
+function ve {
+	pyenv activate ${PWD##*/};
+}
+
+function de {
+	pyenv deactivate;
+}
+
+function mkenv {
+	pyenv virtualenv 3.6.2 ${PWD##*/};
+}
+
+function rmenv {
+	pyenv uninstall ${1:${PWD##*/}};
+}
+
+function redb {
+	sudo -u postgres dropdb $1;
+	echo "db $1 dropped"
+	sudo -u postgres createdb $1 -O $2
+	echo "db $1 created"
+}
+
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
