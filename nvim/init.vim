@@ -1,12 +1,12 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath+=~/.local/share/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.config/nvim/plugins/repos/github.com/Shougo/dein.vim
 
-if dein#load_state(expand('~/.local/share/dein'))
-	call dein#begin(expand('~/.local/share/dein'))
+if dein#load_state(expand('~/.config/nvim/plugins/'))
+	call dein#begin(expand('~/.config/nvim/plugins/'))
 
-	call dein#add(expand('~/.local/share/dein/repos/github.com/Shougo/dein.vim'))
+	call dein#add(expand('~/.config/nvim/plugins/repos/github.com/Shougo/dein.vim'))
 	call dein#add('Shougo/denite.nvim')
 	call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
@@ -23,7 +23,6 @@ if dein#load_state(expand('~/.local/share/dein'))
 
 	"" Vim status bar and colorscheme
 	call dein#add('flazz/vim-colorschemes')
-	call dein#add('miyakogi/conoline.vim')
 	call dein#add('itchyny/lightline.vim')
 
 	"" Git
@@ -33,7 +32,6 @@ if dein#load_state(expand('~/.local/share/dein'))
 	"" Others
 	call dein#add('sheerun/vim-polyglot')
 	call dein#add('vim-scripts/grep.vim')
-	call dein#add('terryma/vim-multiple-cursors')
 
 	"" Snippets
 	call dein#add('honza/vim-snippets')
@@ -55,12 +53,17 @@ if dein#load_state(expand('~/.local/share/dein'))
 	call dein#end()
 	call dein#save_state()
 endif
+if dein#check_install()
+  call dein#install()
+endif
 
 
 " Required:
 filetype plugin indent on
 
 let g:deoplete#enable_at_startup = 1
+let g:python_host_prog = '/usr/local/Cellar/python@2/2.7.14_3/bin/python2'
+let g:python3_host_prog = '/usr/local/Cellar/python/3.6.4_4/bin/python3'
 
 "*****************************************************************************
 "" Basic Setup
@@ -121,7 +124,6 @@ colorscheme inkpot
 
 set mousemodel=popup
 set t_Co=256
-set nocursorline
 set guioptions=egmrti
 set gfn=Monospace\ 10
 
@@ -147,7 +149,6 @@ if &term =~ '256color'
 endif
 
 "" Disable the blinking cursor.
-set gcr=a:blinkon0
 set scrolloff=3
 
 "" Status bar
@@ -173,10 +174,6 @@ let g:lightline = {
       \   'gitbranch': 'gitbranch#name'
       \ },
       \ }
-
-"Multiple cursor flexible exit
-let g:multi_cursor_exit_from_normal_mode=0
-let g:multi_cursor_exit_from_insert_mode=0
 
 "*****************************************************************************
 "" Abbreviations
@@ -423,10 +420,6 @@ set pastetoggle=<F5>
 
 " save file with sudo
 cmap w!! w !sudo tee > /dev/null %
-
-let g:conoline_auto_enable = 0
-set cursorline
-hi CursorLine cterm=NONE ctermbg=8
 
 iab IPDB import ipdb; ipdb.set_trace()
 iab PDB import pdb; pdb.set_trace()

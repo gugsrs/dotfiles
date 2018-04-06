@@ -9,7 +9,7 @@ then
 fi
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/gustavo/.oh-my-zsh
+export ZSH=/Users/gugsrs/.oh-my-zsh
 
 ZSH_THEME="gugsrs2"
 
@@ -22,7 +22,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git pyenv osx zsh-autosuggestions z better-virtualenv git-prompt)
+plugins=(git pyenv osx zsh-autosuggestions z zsh-completions virtualenv git-prompt command-time zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -30,48 +30,9 @@ unsetopt share_history
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=3"
 
-# ALIASES
-alias grep="grep"
-alias egrep="egrep"
-alias less="less -Xr"
-alias la="ls -a"
-alias ll="ls -lah"
-alias ls="ls -G"
-
-#alias git
-alias gs="git status"
-alias gp="git push"
-alias gl="git lg"
-alias gpr="git pull --rebase"
-alias gd="git diff"
-alias gca="git commit --amend"
-
-alias vim="nvim"
-alias tmatessh="tmate display -p '#{tmate_ssh}'"
-
-# FUNCTIONS
-function ve {
-	pyenv activate ${PWD##*/};
-}
-
-function de {
-	pyenv deactivate;
-}
-
-function mkenv {
-	pyenv virtualenv 3.6.2 ${PWD##*/};
-}
-
-function rmenv {
-	pyenv uninstall ${1:${PWD##*/}};
-}
-
-function redb {
-	sudo -u postgres dropdb $1;
-	echo "db $1 dropped"
-	sudo -u postgres createdb $1 -O $2
-	echo "db $1 created"
-}
+source $HOME/.aliases
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
+
+eval $(thefuck --alias)

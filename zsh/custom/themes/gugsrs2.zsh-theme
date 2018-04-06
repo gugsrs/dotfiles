@@ -45,7 +45,10 @@ function _gugsrs_precmd() {
     precmd_update_git_vars
 
     #
-    echo -n $'\n'$_GUGSRS_PROMPT$' '$(git_super_status)$(virtualenv_prompt_info) > $_GUGSRS_ASYNC_PROMPT_FN
+    echo -n $'\n'$_GUGSRS_PROMPT$' '$(git_super_status)' ' > $_GUGSRS_ASYNC_PROMPT_FN
+	if [[ -n $(virtualenv_prompt_info) ]]; then
+      echo -n $''$(virtualenv_prompt_info) $(python -V 2>&1| cut -f 2 -d ' ') >> $_GUGSRS_ASYNC_PROMPT_FN
+	fi
     if [[ x$_gugsrs_rv != x0 ]]; then
       echo -n " exited %{$fg[red]%}$_gugsrs_rv%{$reset_color%}" >> $_GUGSRS_ASYNC_PROMPT_FN
     fi
@@ -85,5 +88,3 @@ function _gugsrs_zshexit() {
 precmd_functions+=(_gugsrs_precmd)
 zshexit_functions+=(_gugsrs_zshexit)
 trap '_gugsrs_trapusr1' USR1
-
-# Based on MITSUHIKO theme https://github.com/mitsuhiko/dotfiles/blob/master/zsh/custom/themes/mitsuhiko.zsh-theme

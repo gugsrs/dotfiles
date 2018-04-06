@@ -1,0 +1,124 @@
+# shell
+alias grep="grep"
+alias egrep="egrep"
+alias less="less -Xr"
+alias la="ls -a"
+alias ll="ls -lah"
+alias ls="ls -G"
+
+# git
+alias gs="git status"
+alias gp="git push"
+alias gl="git lg"
+alias gpr="git pull --rebase"
+alias gd="git diff"
+alias gca="git commit --am}"
+
+alias vim="nvim"
+alias tmatessh="tmate display -p '#{tmate_ssh}'"
+
+# olist
+alias olistup="tmuxinator start olist -n olist"
+alias adminapp="tmuxinator start adminapp"
+alias webapp="tmuxinator start webapp"
+alias apis="tmuxinator start apis"
+
+# envs
+function ve {
+	pyenv activate ${PWD##*/};
+}
+
+function de {
+	pyenv deactivate;
+}
+
+function mkenv {
+	pyenv virtualenv 3.6.4 ${PWD##*/};
+}
+
+function rmenv {
+	pyenv uninstall ${1:${PWD##*/}};
+}
+
+function pve {
+	pipenv shell;
+}
+
+# databases 
+function redb {
+	sudo -u gugsrs dropdb $1;
+	echo "db $1 dropped"
+	sudo -u gugsrs createdb $1 -O olist
+	echo "db $1 created"
+}
+
+
+# aws
+function list_sqs {
+	aws --endpoint-url http://localhost:4576 sqs list-queues
+}
+
+function list_sns {
+	aws --endpoint-url http://localhost:4575 sns list-topics
+}
+
+function list_subscriptions {
+	aws --endpoint-url http://localhost:4575 sns list-subscriptions
+}
+
+function receive_messages {
+	aws --endpoint-url http://localhost:4576 sqs receive-message --queue-url http://localhost:4576/queue/$1
+}
+
+function publish_message {
+    aws --endpoint-url http://localhost:4575 sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:$1 --message $2
+}
+
+function up {
+  ping 8.8.8.8
+}
+
+function battery {
+  pmset -g batt | egrep "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';'
+  pmset -g batt | egrep "([0-9]+\%).*" -o --colour=auto | cut -f3 -d';'
+}
+
+function cpu {
+  sysctl -n machdep.cpu.brand_string
+}
+
+function ip {
+  dig +short myip.opendns.com @resolver1.opendns.com
+}
+
+function ss {
+  open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app
+}
+
+function lock {
+  /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
+}
+
+function icloud {
+  command brctl monitor ~/iCloud/
+}
+
+function icloud-logs {
+  command brctl log --wait
+}
+
+function uptime {
+  command grc uptime
+}
+
+function fortune {
+  command fortune $argv | lolcat
+}
+
+function mate {
+  command subl -multiinstance $argv
+}
+
+function pyc {
+  command find . -name "*.pyc" -exec rm -rf {} \;
+}
