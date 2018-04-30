@@ -7,32 +7,14 @@ if command -v pyenv 1>/dev/null 2>&1;
 then
 	eval "$(pyenv init -)"
 fi
+#
+# User configuration sourced by interactive shells
+#
 
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/gugsrs/.oh-my-zsh
+# Change default zim location
+export ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 
-ZSH_THEME="gugsrs2"
+# Start zim
+[[ -s ${ZIM_HOME}/init.zsh ]] && source ${ZIM_HOME}/init.zsh;
 
-export UPDATE_ZSH_DAYS=5
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git pyenv osx zsh-autosuggestions z zsh-completions virtualenv git-prompt command-time zsh-syntax-highlighting)
-
-source $ZSH/oh-my-zsh.sh
-
-unsetopt share_history
-
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=3"
-
-source $HOME/.aliases
-
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-
-eval $(thefuck --alias)
+source ~/.aliases
