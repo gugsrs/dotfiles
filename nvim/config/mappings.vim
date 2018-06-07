@@ -40,14 +40,13 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+noremap <Leader>t :tabe <C-R>
 
 "" Remove trailing whitespace on <leader>S
 nnoremap <silent> <leader>S :call TrimWhiteSpace()<cr>:let @/=''<CR>
 
 " vimshell
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt =  '$ '
-nnoremap <silent> <leader>sh :VimShellCreate<CR>
+nnoremap <silent> <leader>sh :Deol -split -command=zsh<CR>
 
 "" Copy/Paste/Cut
 if has('unnamedplus')
@@ -100,5 +99,23 @@ set pastetoggle=<F5>
 " save file with sudo
 cmap w!! w !sudo tee > /dev/null %
 
+" Toggle breakpoint
+
+func! s:SetBreakpoint()
+    cal append('.', repeat(' ', strlen(matchstr(getline('.'), '^\s*'))) . 'import ipdb; ipdb.set_trace()')
+endf
+
+func! s:RemoveBreakpoint()
+    exe 'silent! d'
+endf
+
+func! s:ToggleBreakpoint()
+    if getline('.')=~#'^\s*import\sipdb' | cal s:RemoveBreakpoint() | el | cal s:SetBreakpoint() | en
+endf
+nnoremap <F6> :call <SID>ToggleBreakpoint()<CR>
+
 iab IPDB import ipdb; ipdb.set_trace()
 iab PDB import pdb; pdb.set_trace()
+
+noremap <Leader>a :!pipenv run pytest -s %<CR>
+noremap <Leader>as :!pipenv run pytest -s %::<cword><CR>

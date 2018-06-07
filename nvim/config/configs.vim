@@ -29,7 +29,7 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_python_checkers=['python', 'flake8', 'pylint']
+let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_args='--ignore=W391,E501'
 let g:syntastic_python_python_exec = 'python3'
 noremap <leader>l :lclose<CR>
@@ -55,6 +55,7 @@ let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#rename_command = "<leader>r"
+let g:jedi#force_py_version = 3
 
 "*****************************************************************************
 "" Deoplete
