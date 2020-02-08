@@ -2,16 +2,25 @@
 	name = Gustavo Siqueira
 	email = rsiqueira.gustavo@gmail.com
 [core]
-	excludesfile = /Users/sikeira/.gitignore_global
+	excludesfile = /Users/gugsrs/.gitignore
 [alias]
 	differ = diff --word-diff=color --word-diff-regex='[^ ]'
     lg = log --color --all --branches --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%Creset%C(bold red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 	slug = log --color --branches --graph --decorate --oneline
+	files = !git diff --name-only $(git merge-base HEAD master)
+	stat = !git diff --stat $(git merge-base HEAD master)
+	review = !nvim -p $(git files) +\"tabdo Gdiff master\" +\"let g:gitgutter_diff_base = 'master'\" +\"set nofoldenable\"
+	reviewone = !nvim -p +\"tabdo Gdiff master\" +\"let g:gitgutter_diff_base = 'master'\" +\"set nofoldenable\"
 [push]
-	default = simple
+	default = nothing
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
 [pull]
 	rebase = true
+[commit]
+	template = ~/.gitmessage
+	gpgsign = true
+[gpg]
+	program = gpg
