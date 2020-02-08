@@ -26,10 +26,12 @@ if dein#load_state(expand('~/.config/nvim/plugins/'))
 	"" Git
 	call dein#add('airblade/vim-gitgutter')
 	call dein#add('itchyny/vim-gitbranch')
+	call dein#add('tpope/vim-fugitive')
 
 	"" Others
 	call dein#add('sheerun/vim-polyglot')
 	call dein#add('tpope/vim-commentary')
+	call dein#add('ryanoasis/vim-devicons')
 
 	"" Python Bundle
 	call dein#add("davidhalter/jedi-vim")
@@ -37,6 +39,11 @@ if dein#load_state(expand('~/.config/nvim/plugins/'))
 	call dein#add("Yggdroot/indentLine")
 	call dein#add('vim-scripts/indentpython.vim')
 	call dein#add("zchee/deoplete-jedi")
+	call dein#add('tell-k/vim-autopep8')
+	call dein#add('python/black')
+
+	"" Go
+	call dein#add("fatih/vim-go")
 
 	"" HTML Bundle
 	call dein#add('hail2u/vim-css3-syntax')

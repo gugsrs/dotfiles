@@ -1,8 +1,8 @@
 "*****************************************************************************
 "" Python Host
 "*****************************************************************************
-let g:python_host_prog = '/usr/local/Cellar/python@2/2.7.14_3/bin/python2'
-let g:python3_host_prog = '/usr/local/Cellar/python/3.6.5/bin/python3'
+let g:python_host_prog = '/usr/local/Cellar/python@2/2.7.17/bin/python2'
+let g:python3_host_prog = '/usr/local/Cellar/python/3.7.6_1/bin/python3'
 
 "*****************************************************************************
 "" NERDTree configuration
@@ -16,7 +16,7 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 20
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
-noremap <F3> :NERDTreeToggle<CR>
+noremap <silent><F3> :NERDTreeToggle<CR>
 
 "*****************************************************************************
 "" Syntastic
@@ -52,16 +52,18 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
+let g:jedi#documentation_command = "<leader>k"
 let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
 let g:jedi#force_py_version = 3
+let g:jedi#completions_enabled = 0
 
 "*****************************************************************************
 "" Deoplete
 "*****************************************************************************
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
+let g:deoplete#sources#jedi#statement_lenght = 50
+let g:deoplete#sources#jedi#show_docstring = 1
 
 autocmd FileType text let b:deoplete_disable_auto_complete = 1
 autocmd FileType tex let b:deoplete_disable_auto_complete = 1
@@ -75,3 +77,16 @@ call deoplete#custom#source('_',
             \ 'disabled_syntaxes', ['Comment', 'String'])
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+set nofoldenable
+set foldlevel=99
+set diffopt+=context:99999
+let g:vim_markdown_folding_disabled=1
+
+
+"*****************************************************************************
+"" Black
+"*****************************************************************************
+let g:black_fast=1
+let g:black_linelength=110
+"" autocmd BufWritePre *.py execute ':Black'

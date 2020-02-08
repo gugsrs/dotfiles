@@ -11,6 +11,12 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
+cnoreabbrev Tabe tabe
+
+"" Mappings
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>r :source $MYVIMRC<CR>
+nnoremap <leader><Space> :%s/<Tab>/  /g<CR>
 
 "" Split
 "" Change split position Horizontal/Vertical
@@ -24,8 +30,10 @@ noremap <Leader>gsh :!git push<CR>
 noremap <Leader>gll :!git pull<CR>
 noremap <Leader>gs :Gstatus<CR>
 noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
 noremap <Leader>gr :Gremove<CR>
+
+"" Go
+noremap <Leader>gd :GoDoc<CR>
 
 "" Tabs
 nnoremap <Tab> gt
@@ -65,15 +73,16 @@ endif
 
 "" Buffer nav
 noremap <leader>z :bp<CR>
-noremap <leader>q :bp<CR>
 noremap <leader>x :bn<CR>
-noremap <leader>w :bn<CR>
 
 "" Close buffer
 noremap <leader>c :bd<CR>
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
+
+"" Run Black formatter
+noremap <leader>b :Black<CR>
 
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
@@ -97,7 +106,7 @@ nnoremap <C-p> :Denite file/rec buffer<CR>
 set pastetoggle=<F5>
 
 " save file with sudo
-cmap w!! w !sudo tee > /dev/null %
+cnoremap w!! w !sudo tee > /dev/null
 
 " Toggle breakpoint
 

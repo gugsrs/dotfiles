@@ -14,6 +14,7 @@ set backspace=indent,eol,start
 
 "" Tabs. May be overriten by autocmd rules
 set expandtab
+set shiftround
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -40,6 +41,7 @@ set binary
 set nobackup
 set noswapfile
 
+set nofoldenable
 set fileformats=unix,dos,mac
 set showcmd
 set shell=/bin/zsh
@@ -52,37 +54,50 @@ set ruler
 set relativenumber
 set number
 
+set termguicolors
+
+function! MyHighlights() abort
+	highlight ColorColumn cterm=NONE ctermbg=darkcyan gui=NONE guibg=darkcyan
+	highlight BadWhitespace ctermbg=red guibg=red
+endfunction
+
+augroup MyColors
+    autocmd!
+    autocmd ColorScheme * call MyHighlights()
+augroup END
+colorscheme dracula
+
+set colorcolumn=110
+
 let no_buffers_menu=1
-highlight BadWhitespace ctermbg=red guibg=red
-set t_Co=256
-set background=dark
-colorscheme inkpot
+" set t_Co=256
+" set background=dark
 
-set mousemodel=popup
-set t_Co=256
-set guioptions=egmrti
-set gfn=Monospace\ 10
+" set mousemodel=popup
+" set t_Co=256
+" set guioptions=egmrti
+" set gfn=Monospace\ 10
 
-if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h12
-    set transparency=1
-  endif
-else
-  let g:CSApprox_loaded = 1
+" if has("gui_running")
+"   if has("gui_mac") || has("gui_macvim")
+"     set guifont=Menlo:h12
+"     set transparency=1
+"   endif
+" else
+"   let g:CSApprox_loaded = 1
 
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
-endif
+"   if $COLORTERM == 'gnome-terminal'
+"     set term=gnome-256color
+"   else
+"     if $TERM == 'xterm'
+"       set term=xterm-256color
+"     endif
+"   endif
+" endif
 
-if &term =~ '256color'
-  set t_ut=
-endif
+" if &term =~ '256color'
+"   set t_ut=
+" endif
 
 "" Disable the blinking cursor.
 set scrolloff=3
@@ -98,8 +113,6 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-
 let g:lightline = {
 	  \ 'colorscheme': 'darcula',
       \ 'active': {
@@ -110,4 +123,3 @@ let g:lightline = {
       \   'gitbranch': 'gitbranch#name'
       \ },
       \ }
-
