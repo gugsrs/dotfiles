@@ -1,7 +1,7 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath+=/Users/gustavo/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('/Users/gustavo/.cache/dein')
 	call dein#begin('/Users/gustavo/.cache/dein')
@@ -55,6 +55,8 @@ if dein#load_state('/Users/gustavo/.cache/dein')
 	call dein#add('tpope/vim-surround')
     call dein#local('~/dev/', {}, ['vim-moonlight2'])
     call dein#local('~/dev/', {}, ['vim-vaporwave'])
+
+	call dein#add('dracula/vim')
 
 	call dein#end()
 	call dein#save_state()
