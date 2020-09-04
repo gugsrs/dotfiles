@@ -1,8 +1,8 @@
 "*****************************************************************************
 "" Python Host
 "*****************************************************************************
-let g:python_host_prog = '/usr/local/Cellar/python@2/2.7.17/bin/python2'
-let g:python3_host_prog = '/usr/local/Cellar/python/3.7.6_1/bin/python3'
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/local/Cellar/python@3.8/3.8.5/bin/python3'
 
 "*****************************************************************************
 "" NERDTree configuration
@@ -60,8 +60,10 @@ let g:jedi#completions_enabled = 0
 "*****************************************************************************
 "" Deoplete
 "*****************************************************************************
+call deoplete#custom#option({
+\ 'smart_case': v:true
+\ })
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 let g:deoplete#sources#jedi#statement_lenght = 50
 let g:deoplete#sources#jedi#show_docstring = 1
 
@@ -70,7 +72,9 @@ autocmd FileType tex let b:deoplete_disable_auto_complete = 1
 autocmd FileType markdown let b:deoplete_disable_auto_complete = 1
 
 if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
+	call deoplete#custom#option({
+	\ 'omni_patterns': {}
+	\ })
 endif
 
 call deoplete#custom#source('_',
@@ -90,3 +94,5 @@ let g:vim_markdown_folding_disabled=1
 let g:black_fast=1
 let g:black_linelength=110
 "" autocmd BufWritePre *.py execute ':Black'
+
+autocmd FileType markdown let g:indentLine_enabled=0

@@ -66,6 +66,7 @@ augroup MyColors
     autocmd ColorScheme * call MyHighlights()
 augroup END
 colorscheme dracula
+" colorscheme moonlight2
 
 set colorcolumn=110
 
@@ -114,7 +115,7 @@ set titleold="Terminal"
 set titlestring=%F
 
 let g:lightline = {
-	  \ 'colorscheme': 'darcula',
+	  \ 'colorscheme': 'dracula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]

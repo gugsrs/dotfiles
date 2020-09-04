@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/Users/gustavo/sebratec/school-management-system/Ekattor/application/views/backend/admin/librarian'
+let g:netrw_dirhist_5='/Users/gustavo/sebratec/school-management-system/Ekattor/application/views/backend/superadmin'
+let g:netrw_dirhist_4='/Users/gustavo/sebratec/school-management-system/Ekattor/application/views/backend/student/invoice'
+let g:netrw_dirhist_3='/Users/gustavo/sebratec/school-management-system/Ekattor/application/views/backend/admin/class'
+let g:netrw_dirhist_2='/Users/gustavo/dev/vim-moonlight2/colors'
+let g:netrw_dirhist_1='/Users/gustavo/dev/vim-moonlight2'

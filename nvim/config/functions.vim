@@ -69,6 +69,9 @@ if has("gui_running")
   augroup END
 endif
 
-autocmd Filetype html setlocal ts=2 sts=2 sw=2
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,js,php EmmetInstall
+autocmd FileType html,css,js,php setlocal ts=4 sw=4 expandtab
+autocmd FileType md setlocal conceallevel=0
 
 set autoread
